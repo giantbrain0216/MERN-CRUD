@@ -1,0 +1,22 @@
+<% include ../partials/header.ejs %>
+<% include ../partials/navbar.ejs %>
+<main class="container">
+    <h1>Articles</h1>
+
+    <a href="/articles/add">Add a New Article</a>
+
+    <ul class="list-group">
+        <% for (var i = 0; i < articles.length; i++) { %>
+            <li class="list-group-item">
+                <a href="/articles/<%= articles[i]._id %>" title="Edit Article">
+                    <%= articles[i].title %>
+                </a>
+                <br />
+                <%= articles[i].content %>
+                <br />
+                <%= articles[i].created.toDateString() %>
+            </li>
+        <% } %>
+    </ul>
+</main>
+<% include ../partials/footer.ejs %>
