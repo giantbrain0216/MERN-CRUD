@@ -10,13 +10,13 @@ var userSchema = new mongoose.Schema ({
        type: String,
        default: '',
        trim: true,
-       required: 'Title is required'
+       required: 'Username is required'
    },
    password: {
        type: String,
        default: '',
        trim: true,
-       required: 'Title is required'
+       required: 'Password is required'
    }
 });
 

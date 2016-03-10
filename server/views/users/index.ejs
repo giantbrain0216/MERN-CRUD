@@ -9,10 +9,10 @@
         <% for (var i = 0; i < users.length; i++) { %>
             <li class="list-group-item">
                 <a href="/users/<%= users[i]._id %>" title="Edit User">
-                    <%= users[i].title %>
+                    <%= users[i].username %>
                 </a>
                 <br />
-                <%= users[i].content %>
+                <%= users[i].password %>
                 <br />
                 <%= users[i].created.toDateString() %>
             </li>
