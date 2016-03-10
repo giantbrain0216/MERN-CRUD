@@ -1,4 +1,5 @@
 /// <reference path = "./_reference.ts"/>
+"use strict";
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -12,13 +13,13 @@ var myerror = new CustomError();
 // add mongoose
 var mongoose = require('mongoose');
 var routes = require('./routes/index');
-//var users = require('./routes/users');
+var users = require('./routes/users');
 var articles = require('./routes/articles');
 var app = express();
 // connect to mongodb with mongoose
 // local mongodb connection
 //mongoose.connect('mongodb://localhost/comp2068-mongodemo');
-mongoose.connect('mongodb://thomas:12345@ds061345.mongolab.com:61345/heroku_qnl2tjrh');
+mongoose.connect('mongodb://anoop:anoop1234@ds011419.mlab.com:11419/lab5-comp2068');
 // check connection
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Connection Error: '));

@@ -1,12 +1,17 @@
-"use strict";
-var express = require('express');
+import express = require('express');
 var router = express.Router();
-var articleModel = require('../models/article');
-var Article = articleModel.Article;
+
+// db references
+import mongoose = require('mongoose');
+import articleModel = require('../models/article');
+
+import Article = articleModel.Article;
+
 // GET - show main aritcles page
-router.get('/', function (req, res, next) {
+router.get('/', (req: express.Request, res: express.Response, next: any) => {
+   
     // use the Article model to query the Articles collection
-    Article.find(function (error, articles) {
+    Article.find(function(error, articles) {
         if (error) {
             console.log(error);
             res.end(error);
@@ -20,18 +25,20 @@ router.get('/', function (req, res, next) {
         }
     });
 });
+
 // GET add page - show the blank form
-router.get('/add', function (req, res, next) {
+router.get('/add', function(req: express.Request, res: express.Response, next: any) {
     res.render('articles/add', {
         title: 'Add a New Article'
     });
 });
+
 // POST add page - save the new article
-router.post('/add', function (req, res, next) {
+router.post('/add', function(req: express.Request, res: express.Response, next: any) {
     Article.create({
         title: req.body.title,
         content: req.body.content
-    }, function (error, Article) {
+    }, function(error, Article) {
         // did we get back an error or valid Article object?
         if (error) {
             console.log(error);
@@ -40,12 +47,15 @@ router.post('/add', function (req, res, next) {
         else {
             res.redirect('/articles');
         }
-    });
+    })
 });
+
 // GET edit page - show the current article in the form
-router.get('/:id', function (req, res, next) {
+router.get('/:id', (req: express.Request, res: express.Response, next: any) => {
+
     var id = req.params.id;
-    Article.findById(id, function (error, Article) {
+
+    Article.findById(id, (error, Article) => {
         if (error) {
             console.log(error);
             res.end(error);
@@ -59,18 +69,22 @@ router.get('/:id', function (req, res, next) {
         }
     });
 });
+
 // POST edit page - update the selected article
-router.post('/:id', function (req, res, next) {
+router.post('/:id', (req: express.Request, res: express.Response, next: any) => {
+
     // grab the id from the url parameter
     var id = req.params.id;
+
     // create and populate an article object
     var article = new Article({
         _id: id,
         title: req.body.title,
         content: req.body.content
     });
+
     // run the update using mongoose and our model
-    Article.update({ _id: id }, article, function (error) {
+    Article.update({ _id: id }, article, (error) => {
         if (error) {
             console.log(error);
             res.end(error);
@@ -80,12 +94,15 @@ router.post('/:id', function (req, res, next) {
         }
     });
 });
+
 // GET delete article
-router.get('/delete/:id', function (req, res, next) {
+router.get('/delete/:id', (req: express.Request, res: express.Response, next: any) => {
+
     // get the id from the url
     var id = req.params.id;
+
     // use the model and delete this record
-    Article.remove({ _id: id }, function (error) {
+    Article.remove({ _id: id }, (error) => {
         if (error) {
             console.log(error);
             res.end(error);
@@ -95,7 +112,6 @@ router.get('/delete/:id', function (req, res, next) {
         }
     });
 });
+
 // make this public
 module.exports = router;
-
-//# sourceMappingURL=users.js.map
