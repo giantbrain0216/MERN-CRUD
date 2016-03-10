@@ -3,24 +3,24 @@ var router = express.Router();
 
 // db references
 import mongoose = require('mongoose');
-import articleModel = require('../models/article');
+import userModel = require('../models/user');
 
-import Article = articleModel.Article;
+import User = userModel.User;
 
 // GET - show main aritcles page
 router.get('/', (req: express.Request, res: express.Response, next: any) => {
    
-    // use the Article model to query the Articles collection
-    Article.find(function(error, articles) {
+    // use the User model to query the Users collection
+    User.find(function(error, users) {
         if (error) {
             console.log(error);
             res.end(error);
         }
         else {
-            // no error, we found a list of articles
-            res.render('articles/index', {
-                title: 'Articles',
-                articles: articles
+            // no error, we found a list of users
+            res.render('users/index', {
+                title: 'Users',
+                users: users
             });
         }
     });
@@ -28,87 +28,87 @@ router.get('/', (req: express.Request, res: express.Response, next: any) => {
 
 // GET add page - show the blank form
 router.get('/add', function(req: express.Request, res: express.Response, next: any) {
-    res.render('articles/add', {
-        title: 'Add a New Article'
+    res.render('users/add', {
+        title: 'Add a New User'
     });
 });
 
-// POST add page - save the new article
+// POST add page - save the new user
 router.post('/add', function(req: express.Request, res: express.Response, next: any) {
-    Article.create({
-        title: req.body.title,
-        content: req.body.content
-    }, function(error, Article) {
-        // did we get back an error or valid Article object?
+    User.create({
+        username: req.body.username,
+        password: req.body.password
+    }, function(error, User) {
+        // did we get back an error or valid User object?
         if (error) {
             console.log(error);
             res.end(error);
         }
         else {
-            res.redirect('/articles');
+            res.redirect('/users');
         }
     })
 });
 
-// GET edit page - show the current article in the form
+// GET edit page - show the current user in the form
 router.get('/:id', (req: express.Request, res: express.Response, next: any) => {
 
     var id = req.params.id;
 
-    Article.findById(id, (error, Article) => {
+    User.findById(id, (error, User) => {
         if (error) {
             console.log(error);
             res.end(error);
         }
         else {
             //show the edit view
-            res.render('articles/edit', {
-                title: 'Article Details',
-                article: Article
+            res.render('users/edit', {
+                title: 'User Details',
+                user: User
             });
         }
     });
 });
 
-// POST edit page - update the selected article
+// POST edit page - update the selected user
 router.post('/:id', (req: express.Request, res: express.Response, next: any) => {
 
     // grab the id from the url parameter
     var id = req.params.id;
 
-    // create and populate an article object
-    var article = new Article({
+    // create and populate an user object
+    var user = new User({
         _id: id,
-        title: req.body.title,
-        content: req.body.content
+        username: req.body.username,
+        password: req.body.password
     });
 
     // run the update using mongoose and our model
-    Article.update({ _id: id }, article, (error) => {
+    User.update({ _id: id }, user, (error) => {
         if (error) {
             console.log(error);
             res.end(error);
         }
         else {
-            res.redirect('/articles');
+            res.redirect('/users');
         }
     });
 });
 
-// GET delete article
+// GET delete user
 router.get('/delete/:id', (req: express.Request, res: express.Response, next: any) => {
 
     // get the id from the url
     var id = req.params.id;
 
     // use the model and delete this record
-    Article.remove({ _id: id }, (error) => {
+    User.remove({ _id: id }, (error) => {
         if (error) {
             console.log(error);
             res.end(error);
         }
         else {
-            res.redirect('/articles');
+            res.redirect('/users');
         }
     });
 });
