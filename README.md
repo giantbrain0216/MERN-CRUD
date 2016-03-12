@@ -1,3 +1,3 @@
-# COMP2068-MongoDemo
+# Lab 5 - Mongo / Express
 
-A MongoDB Demo Project for COMP2068 @ Georgian College
+Creating a simple user model with CRUD
